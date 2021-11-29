@@ -1,0 +1,6 @@
+﻿var {EntityName} = {Namespace}.AddPermission({Namespace}Permissions.{EntityName}.Default, L("{EntityName}"));
+            {EntityName}.AddChild({Namespace}Permissions.{EntityName}.Update, L("Edit"));
+            {EntityName}.AddChild({Namespace}Permissions.{EntityName}.Delete, L("Delete"));
+            {EntityName}.AddChild({Namespace}Permissions.{EntityName}.Create, L("Create"));
+
+            //Code generation...

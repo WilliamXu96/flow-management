@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>XCZ</RootNamespace>
+    <AssemblyName>XCZ.FlowManagement.Application.Contracts</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.1</Version>
+    <Authors>XCZ</Authors>
+    <Description>流程管理ApplicationContracts</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Localization\en.json" />
+    <None Remove="Localization\zh-Hans.json" />
+    <None Remove="Localization\zh-Hant.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\en.json" />
+    <EmbeddedResource Include="Localization\zh-Hans.json" />
+    <EmbeddedResource Include="Localization\zh-Hant.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.Localization" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="4.3.2" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,9 @@
+﻿builder.Entity<{EntityName}>(b =>
+            {
+                b.ToTable("{TableName}");
+
+                b.ConfigureByConvention();
+                {Properties}
+            });
+
+            //Code generation...

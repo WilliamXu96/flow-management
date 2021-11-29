@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>XCZ</RootNamespace>
+    <AssemblyName>XCZ.FlowManagement.HttpApi</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.1</Version>
+    <Authors>XCZ</Authors>
+    <Description>流程管理HttpApi</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="4.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XCZ.Flow.Application.Contracts\XCZ.Flow.Application.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

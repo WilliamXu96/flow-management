@@ -1,0 +1,10 @@
+﻿using System;
+using Volo.Abp.Application.Dtos;
+
+namespace {Namespace}.{EntityName}Management.Dto
+{
+    public class Get{EntityName}InputDto : PagedAndSortedResultRequestDto
+    {
+        public string Filter { get; set; }
+    }
+}

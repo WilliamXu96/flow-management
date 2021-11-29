@@ -1,0 +1,12 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Volo.Abp.Application.Dtos;
+
+namespace {Namespace}.{EntityName}Management.Dto
+{
+    public class CreateOrUpdate{EntityName}Dto: EntityDto<Guid?>
+    {
+        {AttributeList}
+    }
+}

@@ -1,0 +1,15 @@
+﻿using AutoMapper;
+using {Namespace}.{EntityName}Management.Dto;
+using {Namespace}.Models;
+
+namespace {Namespace}.{EntityName}Management
+{
+    public class {EntityName}AutoMapperProfile : Profile
+    {
+        public {EntityName}AutoMapperProfile()
+        {
+            CreateMap<{EntityName}, {EntityName}Dto>();
+            CreateMap<CreateOrUpdate{EntityName}Dto, {EntityName}>();
+        }
+    }
+}

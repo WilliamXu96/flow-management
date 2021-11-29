@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>XCZ</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyName>XCZ.FlowManagement.Domain</AssemblyName>
+    <Version>0.1.1</Version>
+    <Authors>XCZ</Authors>
+    <Description>流程管理Domain</Description>
+    <Company />
+    <Copyright />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="4.3.2" />
+  </ItemGroup>
+
+</Project>
