@@ -1,17 +1,9 @@
-﻿using System;
-using Volo.Abp;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.MultiTenancy;
+﻿using System.Collections.Generic;
 
-namespace XCZ.FlowManagement
+namespace XCZ.FlowManagement.Dto
 {
-    /// <summary>
-    /// 流程连线
-    /// </summary>
-    public class FlowLink : AggregateRoot<Guid>, IMultiTenant, ISoftDelete
+    public class FlowLinkDto
     {
-        public Guid? TenantId { get; set; }
-
         /// <summary>
         /// 连线Id
         /// </summary>
@@ -36,11 +28,6 @@ namespace XCZ.FlowManagement
 
         public string Remark { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public FlowLink(Guid id) : base(id)
-        {
-
-        }
+        public List<LinkFormDto> TempFieldForm { get; set; }
     }
 }

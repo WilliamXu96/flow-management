@@ -1,17 +1,11 @@
 ﻿using System;
-using Volo.Abp;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.MultiTenancy;
+using System.Collections.Generic;
+using Volo.Abp.Application.Dtos;
 
-namespace XCZ.FlowManagement
+namespace XCZ.FlowManagement.Dto
 {
-    /// <summary>
-    /// 流程信息
-    /// </summary>
-    public class BaseFlow : AggregateRoot<Guid>, IMultiTenant, ISoftDelete
+    public class FlowDto : EntityDto<Guid>
     {
-        public Guid? TenantId { get; set; }
-
         /// <summary>
         /// 流程Id
         /// </summary>
@@ -41,11 +35,8 @@ namespace XCZ.FlowManagement
 
         public string Remark { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public List<FlowNodeDto> NodeList { get; set; }
 
-        public BaseFlow(Guid id) : base(id)
-        {
-
-        }
+        public List<FlowLinkDto> LinkList { get; set; } 
     }
 }

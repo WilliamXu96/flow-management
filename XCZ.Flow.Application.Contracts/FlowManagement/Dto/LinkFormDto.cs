@@ -1,14 +1,9 @@
 ﻿using System;
-using Volo.Abp;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.MultiTenancy;
 
-namespace XCZ.FlowManagement
+namespace XCZ.FlowManagement.Dto
 {
-    public class LinkForm : AggregateRoot<Guid>, IMultiTenant, ISoftDelete
+    public class LinkFormDto
     {
-        public Guid? TenantId { get; set; }
-
         public string LinkId { get; set; }
 
         /// <summary>
@@ -24,12 +19,5 @@ namespace XCZ.FlowManagement
         public string Content { get; set; }
 
         public string Remark { get; set; }
-
-        public bool IsDeleted { get; set; }
-
-        public LinkForm(Guid id) : base(id)
-        {
-
-        }
     }
 }

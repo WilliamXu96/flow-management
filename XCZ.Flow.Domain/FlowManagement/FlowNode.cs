@@ -32,5 +32,10 @@ namespace XCZ.FlowManagement
         public string Remark { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public FlowNode(Guid id) : base(id)
+        {
+
+        }
     }
 }
