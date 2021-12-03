@@ -12,6 +12,8 @@ namespace XCZ.FlowManagement
     {
         public Guid? TenantId { get; set; }
 
+        public Guid BaseFlowId { get; set; }
+
         /// <summary>
         /// 连线Id
         /// </summary>

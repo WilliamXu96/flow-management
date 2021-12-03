@@ -21,6 +21,8 @@ namespace XCZ.EntityFrameworkCore
                 b.Property(x => x.Title).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Code).IsRequired().HasMaxLength(50);
                 b.Property(x => x.Remark).HasMaxLength(200);
+
+                b.HasIndex(x => x.FormId);
             });
 
             builder.Entity<FlowNode>(b =>

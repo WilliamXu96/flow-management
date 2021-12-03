@@ -9,7 +9,9 @@ namespace XCZ.FlowManagement
     {
         public Guid? TenantId { get; set; }
 
-        public string LinkId { get; set; }
+        public Guid BaseFlowId { get; set; }
+
+        public Guid FlowLinkId { get; set; }
 
         /// <summary>
         /// 表单

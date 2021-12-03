@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Volo.Abp.Application.Dtos;
 
 namespace XCZ.FlowManagement.Dto
 {
-    public class FlowLinkDto
+    public class FlowLinkDto : EntityDto<Guid>
     {
         /// <summary>
         /// 连线Id

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -48,25 +50,94 @@ namespace XCZ.FlowManagement
             {
                 await _nodeRep.InsertAsync(new FlowNode(GuidGenerator.Create())
                 {
-
-                })
+                    TenantId = CurrentTenant.Id,
+                    BaseFlowId = baseFlowId,
+                    NodeId = node.NodeId,
+                    NodeName = node.NodeName,
+                    Type = node.Type,
+                    Height = node.Height,
+                    X = node.X,
+                    Width = node.Width,
+                    Y = node.Y,
+                    Remark = node.Remark
+                });
             }
-            
+
+            foreach (var link in input.LinkList)
+            {
+                var flowLinkId = GuidGenerator.Create();
+                await _linkRep.InsertAsync(new FlowLink(flowLinkId)
+                {
+                    TenantId = CurrentTenant.Id,
+                    BaseFlowId = baseFlowId,
+                    LinkId = link.LinkId,
+                    Label = link.Label,
+                    Type = link.Type,
+                    SourceId = link.SourceId,
+                    TargetId = link.TargetId,
+                    Remark = link.Remark
+                });
+
+                foreach (var form in link.TempFieldForm)
+                {
+                    await _linkFormRep.InsertAsync(new LinkForm(GuidGenerator.Create())
+                    {
+                        TenantId = CurrentTenant.Id,
+                        BaseFlowId = baseFlowId,
+                        FlowLinkId = flowLinkId,
+                        FieldId = form.FieldId,
+                        Condition = form.Condition,
+                        Content = form.Content,
+                        Remark = form.Remark
+                    });
+                }
+            }
+
+            return ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
         }
 
-        public Task Delete(List<Guid> ids)
+        public async Task Delete(List<Guid> ids)
         {
-            throw new NotImplementedException();
+            foreach (var id in ids)
+            {
+                await _baseRep.DeleteAsync(_ => _.Id == id);
+                await _nodeRep.DeleteAsync(_ => _.BaseFlowId == id);
+                await _linkRep.DeleteAsync(_ => _.BaseFlowId == id);
+                await _linkFormRep.DeleteAsync(_ => _.BaseFlowId == id);
+            }
         }
 
-        public Task<FlowDto> Get(Guid id)
+        public async Task<FlowDto> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var baseFlow = await _baseRep.GetAsync(id);
+            var flowNodes = await _nodeRep.Where(_ => _.BaseFlowId == id).ToListAsync();
+            var flowLinks = await _linkRep.Where(_ => _.BaseFlowId == id).ToListAsync();
+            var linkForms = await _linkFormRep.Where(_ => _.BaseFlowId == id).ToListAsync();
+
+            var dto = ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
+            dto.NodeList = ObjectMapper.Map<List<FlowNode>, List<FlowNodeDto>>(flowNodes);
+            dto.LinkList = ObjectMapper.Map<List<FlowLink>, List<FlowLinkDto>>(flowLinks);
+            foreach (var link in dto.LinkList)
+            {
+                var tempFieldForm = linkForms.Where(_ => _.FlowLinkId == link.Id).ToList();
+                link.TempFieldForm = ObjectMapper.Map<List<LinkForm>, List<LinkFormDto>>(tempFieldForm);
+            }
+
+            return dto;
         }
 
-        public Task<PagedResultDto<FlowDto>> GetAll(GetFlowInputDto input)
+        public async Task<PagedResultDto<FlowDto>> GetAll(GetFlowInputDto input)
         {
-            throw new NotImplementedException();
+            var query = _baseRep.WhereIf(!input.Filter.IsNullOrWhiteSpace(), _ => _.Code.Contains(input.Filter) || _.Title.Contains(input.Filter));
+
+            var totalCount = await query.CountAsync();
+            var items = await query.OrderBy(input.Sorting ?? "CreationTime desc")
+                                   .Skip(input.SkipCount)
+                                   .Take(input.MaxResultCount)
+                                   .ToListAsync();
+
+            var dto = ObjectMapper.Map<List<BaseFlow>, List<FlowDto>>(items);
+            return new PagedResultDto<FlowDto>(totalCount, dto);
         }
 
         public Task<FlowDto> Update(Guid id, CreateOrUpdateFlowDto input)
