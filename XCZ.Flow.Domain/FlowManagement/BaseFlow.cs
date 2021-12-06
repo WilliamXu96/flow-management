@@ -41,6 +41,11 @@ namespace XCZ.FlowManagement
 
         public string Remark { get; set; }
 
+        /// <summary>
+        /// 状态：0未启用、1启用
+        /// </summary>
+        public int Status { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public BaseFlow(Guid id) : base(id)

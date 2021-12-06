@@ -21,6 +21,7 @@ namespace XCZ.EntityFrameworkCore
                 b.Property(x => x.Title).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Code).IsRequired().HasMaxLength(50);
                 b.Property(x => x.Remark).HasMaxLength(200);
+                b.Property(x => x.Status).HasDefaultValue(0);
 
                 b.HasIndex(x => x.FormId);
             });
@@ -54,7 +55,7 @@ namespace XCZ.EntityFrameworkCore
                 b.ToTable("base_flow_link_form");
                 b.ConfigureByConvention();
 
-                b.Property(x => x.LinkId).IsRequired().HasMaxLength(100);
+                b.Property(x => x.FlowLinkId).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Content).HasMaxLength(100);
                 b.Property(x => x.Remark).HasMaxLength(200);
             });
