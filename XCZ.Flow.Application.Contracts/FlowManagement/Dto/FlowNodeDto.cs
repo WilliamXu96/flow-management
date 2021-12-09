@@ -5,9 +5,8 @@
         /// <summary>
         /// 节点Id
         /// </summary>
-        public string NodeId { get; set; }
+        public string Id { get; set; }
 
-        public string NodeName { get; set; }
 
         public string Type { get; set; }
 

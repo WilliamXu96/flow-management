@@ -26,7 +26,7 @@ namespace XCZ.FlowManagement.Dto
         /// <summary>
         /// 使用日期
         /// </summary>
-        public DateTime UseDate { get; set; }
+        public string UseDate { get; set; }
 
         /// <summary>
         /// 级别

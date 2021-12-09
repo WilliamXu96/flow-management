@@ -13,6 +13,8 @@ namespace XCZ.FlowManagement
 
         public Guid FlowLinkId { get; set; }
 
+        public string Pid { get; set; }
+
         /// <summary>
         /// 表单
         /// </summary>

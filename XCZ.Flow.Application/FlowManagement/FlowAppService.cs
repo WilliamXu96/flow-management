@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Uow;
 using XCZ.FlowManagement.Dto;
 
 namespace XCZ.FlowManagement
@@ -122,7 +123,7 @@ namespace XCZ.FlowManagement
             dto.LinkList = ObjectMapper.Map<List<FlowLink>, List<FlowLinkDto>>(flowLinks);
             foreach (var link in dto.LinkList)
             {
-                var tempFieldForm = linkForms.Where(_ => _.FlowLinkId == link.Id).ToList();
+                var tempFieldForm = linkForms.Where(_ => _.FlowLinkId == link.FlowLinkId).ToList();
                 link.TempFieldForm = ObjectMapper.Map<List<LinkForm>, List<LinkFormDto>>(tempFieldForm);
             }
 
@@ -159,7 +160,7 @@ namespace XCZ.FlowManagement
             return ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
         }
 
-        private async Task InsertNodes(Guid baseFlowId, List<FlowNodeDto> nodes)
+        private async Task InsertNodes(Guid baseFlowId, List<CreateOrUpdateFlowNodeDto> nodes)
         {
             foreach (var node in nodes)
             {
@@ -167,7 +168,7 @@ namespace XCZ.FlowManagement
                 {
                     TenantId = CurrentTenant.Id,
                     BaseFlowId = baseFlowId,
-                    NodeId = node.NodeId,
+                    NodeId = node.Id,
                     NodeName = node.NodeName,
                     Type = node.Type,
                     Height = node.Height,
@@ -179,7 +180,7 @@ namespace XCZ.FlowManagement
             }
         }
 
-        private async Task InsertLinks(Guid baseFlowId, List<FlowLinkDto> links)
+        private async Task InsertLinks(Guid baseFlowId, List<CreateOrUpdateFlowLinkDto> links)
         {
             foreach (var link in links)
             {
@@ -188,7 +189,7 @@ namespace XCZ.FlowManagement
                 {
                     TenantId = CurrentTenant.Id,
                     BaseFlowId = baseFlowId,
-                    LinkId = link.LinkId,
+                    LinkId = link.Id,
                     Label = link.Label,
                     Type = link.Type,
                     SourceId = link.SourceId,
@@ -203,6 +204,7 @@ namespace XCZ.FlowManagement
                         TenantId = CurrentTenant.Id,
                         BaseFlowId = baseFlowId,
                         FlowLinkId = flowLinkId,
+                        Pid = link.Id,
                         FieldId = form.FieldId,
                         Condition = form.Condition,
                         Content = form.Content,

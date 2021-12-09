@@ -9,8 +9,11 @@ namespace XCZ
         public FlowApplicationAutoMapperProfile()
         {
             CreateMap<BaseFlow, FlowDto>();
-            CreateMap<FlowNode, FlowNodeDto>();
-            CreateMap<FlowLink, FlowLinkDto>();
+            CreateMap<FlowNode, FlowNodeDto>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.NodeId));
+            CreateMap<FlowLink, FlowLinkDto>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.LinkId))
+                .ForMember(dto => dto.FlowLinkId, opt => opt.MapFrom(src => src.Id));
             CreateMap<LinkForm, LinkFormDto>();
         }
     }

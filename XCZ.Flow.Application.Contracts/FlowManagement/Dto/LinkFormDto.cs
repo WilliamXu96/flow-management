@@ -4,7 +4,7 @@ namespace XCZ.FlowManagement.Dto
 {
     public class LinkFormDto
     {
-        public string LinkId { get; set; }
+        public string Pid { get; set; }
 
         /// <summary>
         /// 表单

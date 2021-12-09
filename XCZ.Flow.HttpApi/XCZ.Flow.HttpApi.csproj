@@ -19,8 +19,4 @@
     <ProjectReference Include="..\XCZ.Flow.Application.Contracts\XCZ.Flow.Application.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="FlowManagement\" />
-  </ItemGroup>
-
 </Project>

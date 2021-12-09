@@ -8,13 +8,13 @@ namespace XCZ.EntityFrameworkCore
     [ConnectionStringName("Business")]
     public class FlowDbContext : AbpDbContext<FlowDbContext>
     {
-        public DbSet<BaseFlow> BaseFlows;
+        public DbSet<BaseFlow> BaseFlows { get; set; }
 
-        public DbSet<FlowLink> FlowLinks;
+        public DbSet<FlowLink> FlowLinks { get; set; }
 
-        public DbSet<FlowNode> FlowNodes;
+        public DbSet<FlowNode> FlowNodes { get; set; }
 
-        public DbSet<LinkForm> LinkForms;
+        public DbSet<LinkForm> LinkForms { get; set; }
 
         public FlowDbContext(DbContextOptions<FlowDbContext> options) : base(options)
         {

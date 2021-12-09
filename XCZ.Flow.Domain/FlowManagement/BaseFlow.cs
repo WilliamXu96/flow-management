@@ -1,6 +1,7 @@
 ﻿using System;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
 namespace XCZ.FlowManagement
@@ -8,7 +9,7 @@ namespace XCZ.FlowManagement
     /// <summary>
     /// 流程信息
     /// </summary>
-    public class BaseFlow : AggregateRoot<Guid>, IMultiTenant, ISoftDelete
+    public class BaseFlow : AuditedAggregateRoot<Guid>, IMultiTenant, ISoftDelete
     {
         public Guid? TenantId { get; set; }
 
@@ -32,7 +33,7 @@ namespace XCZ.FlowManagement
         /// <summary>
         /// 使用日期
         /// </summary>
-        public DateTime UseDate { get; set; }
+        public string UseDate { get; set; }
 
         /// <summary>
         /// 级别

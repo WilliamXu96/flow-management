@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Volo.Abp.Application.Dtos;
 
 namespace XCZ.FlowManagement.Dto
 {
-    public class FlowLinkDto : EntityDto<Guid>
+    public class FlowLinkDto
     {
         /// <summary>
         /// 连线Id
         /// </summary>
-        public string LinkId { get; set; }
+        public string Id { get; set; }
+
+        public Guid FlowLinkId { get; set; }
 
         /// <summary>
         /// 标题
