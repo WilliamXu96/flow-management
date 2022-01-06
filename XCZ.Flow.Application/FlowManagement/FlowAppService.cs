@@ -114,9 +114,9 @@ namespace XCZ.FlowManagement
         public async Task<FlowDto> Get(Guid id)
         {
             var baseFlow = await _baseRep.GetAsync(id);
-            var flowNodes = await _nodeRep.Where(_ => _.BaseFlowId == id).ToListAsync();
-            var flowLinks = await _linkRep.Where(_ => _.BaseFlowId == id).ToListAsync();
-            var linkForms = await _linkFormRep.Where(_ => _.BaseFlowId == id).ToListAsync();
+            var flowNodes = await(await _nodeRep.GetQueryableAsync()).Where(_ => _.BaseFlowId == id).ToListAsync();
+            var flowLinks = await(await _linkRep.GetQueryableAsync()).Where(_ => _.BaseFlowId == id).ToListAsync();
+            var linkForms = await (await _linkFormRep.GetQueryableAsync()).Where(_ => _.BaseFlowId == id).ToListAsync();
 
             var dto = ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
             dto.NodeList = ObjectMapper.Map<List<FlowNode>, List<FlowNodeDto>>(flowNodes);
@@ -132,7 +132,7 @@ namespace XCZ.FlowManagement
 
         public async Task<PagedResultDto<FlowDto>> GetAll(GetFlowInputDto input)
         {
-            var query = _baseRep.WhereIf(!input.Filter.IsNullOrWhiteSpace(), _ => _.Code.Contains(input.Filter) || _.Title.Contains(input.Filter));
+            var query =(await _baseRep.GetQueryableAsync()).WhereIf(!input.Filter.IsNullOrWhiteSpace(), _ => _.Code.Contains(input.Filter) || _.Title.Contains(input.Filter));
 
             var totalCount = await query.CountAsync();
             var items = await query.OrderBy(input.Sorting ?? "CreationTime desc")
