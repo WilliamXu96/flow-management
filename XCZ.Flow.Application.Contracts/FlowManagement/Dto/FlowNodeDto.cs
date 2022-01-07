@@ -10,6 +10,8 @@
 
         public string Type { get; set; }
 
+        public string NodeName { get; set; }
+
         public int Height { get; set; }
 
         public int X { get; set; }

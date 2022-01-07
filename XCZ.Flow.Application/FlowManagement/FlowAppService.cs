@@ -197,6 +197,7 @@ namespace XCZ.FlowManagement
                     Remark = link.Remark
                 });
 
+                if (link.TempFieldForm == null) continue;
                 foreach (var form in link.TempFieldForm)
                 {
                     await _linkFormRep.InsertAsync(new LinkForm(GuidGenerator.Create())
