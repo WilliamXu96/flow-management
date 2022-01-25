@@ -5,7 +5,7 @@
     <RootNamespace>XCZ</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyName>XCZ.FlowManagement.Domain</AssemblyName>
-    <Version>0.1.6</Version>
+    <Version>0.1.8</Version>
     <Authors>XCZ</Authors>
     <Description>流程管理Domain</Description>
     <Company />

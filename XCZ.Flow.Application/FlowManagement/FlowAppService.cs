@@ -17,14 +17,14 @@ namespace XCZ.FlowManagement
     {
         private readonly IRepository<BaseFlow, Guid> _baseRep;
         private readonly IRepository<FlowNode, Guid> _nodeRep;
-        private readonly IRepository<FlowLink, Guid> _linkRep;
-        private readonly IRepository<LinkForm, Guid> _linkFormRep;
+        private readonly IRepository<FlowLine, Guid> _linkRep;
+        private readonly IRepository<LineForm, Guid> _linkFormRep;
 
         public FlowAppService(
             IRepository<BaseFlow, Guid> baseRep,
             IRepository<FlowNode, Guid> nodeRep,
-            IRepository<FlowLink, Guid> linkRep,
-            IRepository<LinkForm, Guid> linkFormRep)
+            IRepository<FlowLine, Guid> linkRep,
+            IRepository<LineForm, Guid> linkFormRep)
         {
             _baseRep = baseRep;
             _nodeRep = nodeRep;
@@ -38,7 +38,7 @@ namespace XCZ.FlowManagement
             var baseFlow = await _baseRep.InsertAsync(new BaseFlow(baseFlowId)
             {
                 TenantId = CurrentTenant.Id,
-                FlowId = input.FlowId,
+                //FlowId = input.FlowId,
                 FormId = input.FormId,
                 Title = input.Title,
                 Code = input.Code,
@@ -47,55 +47,8 @@ namespace XCZ.FlowManagement
                 Remark = input.Remark
             });
 
-            //foreach (var node in input.NodeList)
-            //{
-            //    await _nodeRep.InsertAsync(new FlowNode(GuidGenerator.Create())
-            //    {
-            //        TenantId = CurrentTenant.Id,
-            //        BaseFlowId = baseFlowId,
-            //        NodeId = node.NodeId,
-            //        NodeName = node.NodeName,
-            //        Type = node.Type,
-            //        Height = node.Height,
-            //        X = node.X,
-            //        Width = node.Width,
-            //        Y = node.Y,
-            //        Remark = node.Remark
-            //    });
-            //}
-
             await InsertNodes(baseFlowId, input.NodeList);
-            await InsertLinks(baseFlowId, input.LinkList);
-
-            //foreach (var link in input.LinkList)
-            //{
-            //    var flowLinkId = GuidGenerator.Create();
-            //    await _linkRep.InsertAsync(new FlowLink(flowLinkId)
-            //    {
-            //        TenantId = CurrentTenant.Id,
-            //        BaseFlowId = baseFlowId,
-            //        LinkId = link.LinkId,
-            //        Label = link.Label,
-            //        Type = link.Type,
-            //        SourceId = link.SourceId,
-            //        TargetId = link.TargetId,
-            //        Remark = link.Remark
-            //    });
-
-            //    foreach (var form in link.TempFieldForm)
-            //    {
-            //        await _linkFormRep.InsertAsync(new LinkForm(GuidGenerator.Create())
-            //        {
-            //            TenantId = CurrentTenant.Id,
-            //            BaseFlowId = baseFlowId,
-            //            FlowLinkId = flowLinkId,
-            //            FieldId = form.FieldId,
-            //            Condition = form.Condition,
-            //            Content = form.Content,
-            //            Remark = form.Remark
-            //        });
-            //    }
-            //}
+            await InsertLinks(baseFlowId, input.LineList);
 
             return ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
         }
@@ -114,17 +67,16 @@ namespace XCZ.FlowManagement
         public async Task<FlowDto> Get(Guid id)
         {
             var baseFlow = await _baseRep.GetAsync(id);
-            var flowNodes = await(await _nodeRep.GetQueryableAsync()).Where(_ => _.BaseFlowId == id).ToListAsync();
-            var flowLinks = await(await _linkRep.GetQueryableAsync()).Where(_ => _.BaseFlowId == id).ToListAsync();
+            var flowNodes = await (await _nodeRep.GetQueryableAsync()).Where(_ => _.BaseFlowId == id).ToListAsync();
+            var flowLinks = await (await _linkRep.GetQueryableAsync()).Where(_ => _.BaseFlowId == id).ToListAsync();
             var linkForms = await (await _linkFormRep.GetQueryableAsync()).Where(_ => _.BaseFlowId == id).ToListAsync();
 
             var dto = ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
             dto.NodeList = ObjectMapper.Map<List<FlowNode>, List<FlowNodeDto>>(flowNodes);
-            dto.LinkList = ObjectMapper.Map<List<FlowLink>, List<FlowLinkDto>>(flowLinks);
-            foreach (var link in dto.LinkList)
+            dto.LineList = ObjectMapper.Map<List<FlowLine>, List<FlowLinkDto>>(flowLinks);
+            foreach (var link in dto.LineList)
             {
-                var tempFieldForm = linkForms.Where(_ => _.FlowLinkId == link.FlowLinkId).ToList();
-                link.TempFieldForm = ObjectMapper.Map<List<LinkForm>, List<LinkFormDto>>(tempFieldForm);
+                link.FormField = ObjectMapper.Map<List<LineForm>, List<LineFormDto>>(linkForms.Where(_ => _.FlowLinkId == link.Id).ToList());
             }
 
             return dto;
@@ -132,7 +84,7 @@ namespace XCZ.FlowManagement
 
         public async Task<PagedResultDto<FlowDto>> GetAll(GetFlowInputDto input)
         {
-            var query =(await _baseRep.GetQueryableAsync()).WhereIf(!input.Filter.IsNullOrWhiteSpace(), _ => _.Code.Contains(input.Filter) || _.Title.Contains(input.Filter));
+            var query = (await _baseRep.GetQueryableAsync()).WhereIf(!input.Filter.IsNullOrWhiteSpace(), _ => _.Code.Contains(input.Filter) || _.Title.Contains(input.Filter));
 
             var totalCount = await query.CountAsync();
             var items = await query.OrderBy(input.Sorting ?? "CreationTime desc")
@@ -147,16 +99,16 @@ namespace XCZ.FlowManagement
         public async Task<FlowDto> Update(Guid id, CreateOrUpdateFlowDto input)
         {
             var baseFlow = await _baseRep.GetAsync(id);
-            baseFlow.FormId = input.FormId;
-            baseFlow.Title = input.Title;
-            baseFlow.UseDate = input.UseDate;
-            baseFlow.Level = input.Level;
-            baseFlow.Remark = input.Remark;
+            //baseFlow.FormId = input.FormId;
+            //baseFlow.Title = input.Title;
+            //baseFlow.UseDate = input.UseDate;
+            //baseFlow.Level = input.Level;
+            //baseFlow.Remark = input.Remark;
             await _nodeRep.DeleteAsync(_ => _.BaseFlowId == id);
             await _linkRep.DeleteAsync(_ => _.BaseFlowId == id);
             await _linkFormRep.DeleteAsync(_ => _.BaseFlowId == id);
             await InsertNodes(id, input.NodeList);
-            await InsertLinks(id, input.LinkList);
+            await InsertLinks(id, input.LineList);
             return ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
         }
 
@@ -169,43 +121,46 @@ namespace XCZ.FlowManagement
                     TenantId = CurrentTenant.Id,
                     BaseFlowId = baseFlowId,
                     NodeId = node.Id,
-                    NodeName = node.NodeName,
+                    Name = node.Name,
                     Type = node.Type,
-                    Height = node.Height,
-                    X = node.X,
-                    Width = node.Width,
-                    Y = node.Y,
+                    Left = node.Left,
+                    Top = node.Top,
+                    Ico = node.Ico,
+                    State = node.State,
+                    Executor = node.Executor,
+                    Users = node.Users,
+                    Roles = node.Roles,
                     Remark = node.Remark
                 });
             }
         }
 
-        private async Task InsertLinks(Guid baseFlowId, List<CreateOrUpdateFlowLinkDto> links)
+        private async Task InsertLinks(Guid baseFlowId, List<CreateOrUpdateFlowLineDto> links)
         {
             foreach (var link in links)
             {
                 var flowLinkId = GuidGenerator.Create();
-                await _linkRep.InsertAsync(new FlowLink(flowLinkId)
+                await _linkRep.InsertAsync(new FlowLine(flowLinkId)
                 {
                     TenantId = CurrentTenant.Id,
                     BaseFlowId = baseFlowId,
-                    LinkId = link.Id,
+                    //LineId = link.Id,
                     Label = link.Label,
-                    Type = link.Type,
-                    SourceId = link.SourceId,
-                    TargetId = link.TargetId,
+                    From = link.From,
+                    To = link.To,
+                    //TargetId = link.To,
                     Remark = link.Remark
                 });
 
-                if (link.TempFieldForm == null) continue;
-                foreach (var form in link.TempFieldForm)
+                if (link.FormField == null) continue;
+                foreach (var form in link.FormField)
                 {
-                    await _linkFormRep.InsertAsync(new LinkForm(GuidGenerator.Create())
+                    await _linkFormRep.InsertAsync(new LineForm(GuidGenerator.Create())
                     {
                         TenantId = CurrentTenant.Id,
                         BaseFlowId = baseFlowId,
                         FlowLinkId = flowLinkId,
-                        Pid = link.Id,
+                        //Pid = link.Id,
                         FieldId = form.FieldId,
                         Condition = form.Condition,
                         Content = form.Content,

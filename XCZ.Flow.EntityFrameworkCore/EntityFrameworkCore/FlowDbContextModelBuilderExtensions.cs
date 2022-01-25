@@ -17,7 +17,7 @@ namespace XCZ.EntityFrameworkCore
                 b.ToTable("base_flow");
                 b.ConfigureByConvention();
 
-                b.Property(x => x.FlowId).IsRequired().HasMaxLength(100);
+                //b.Property(x => x.FlowId).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Title).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Code).IsRequired().HasMaxLength(50);
                 b.Property(x => x.UseDate).IsRequired().HasMaxLength(50);
@@ -33,31 +33,38 @@ namespace XCZ.EntityFrameworkCore
                 b.ConfigureByConvention();
 
                 b.Property(x => x.NodeId).IsRequired().HasMaxLength(100);
-                b.Property(x => x.NodeName).HasMaxLength(100);
+                b.Property(x => x.Name).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Type).IsRequired().HasMaxLength(50);
+                b.Property(x => x.Left).IsRequired().HasMaxLength(50);
+                b.Property(x => x.Top).IsRequired().HasMaxLength(50);
+                b.Property(x => x.Ico).HasMaxLength(50);
+                b.Property(x => x.State).HasMaxLength(50);
+                b.Property(x => x.Executor).HasMaxLength(50);
+                b.Property(x => x.Users).HasMaxLength(50);
+                b.Property(x => x.Roles).HasMaxLength(50);
                 b.Property(x => x.Remark).HasMaxLength(200);
             });
 
-            builder.Entity<FlowLink>(b =>
+            builder.Entity<FlowLine>(b =>
             {
-                b.ToTable("base_flow_link");
+                b.ToTable("base_flow_line");
                 b.ConfigureByConvention();
 
-                b.Property(x => x.LinkId).IsRequired().HasMaxLength(100);
-                b.Property(x => x.Label).IsRequired().HasMaxLength(100);
-                b.Property(x => x.Type).IsRequired().HasMaxLength(50);
-                b.Property(x => x.SourceId).IsRequired().HasMaxLength(100);
-                b.Property(x => x.TargetId).IsRequired().HasMaxLength(100);
+                //b.Property(x => x.LineId).IsRequired().HasMaxLength(100);
+                b.Property(x => x.Label).HasMaxLength(100);
+                b.Property(x => x.From).IsRequired().HasMaxLength(50);
+                b.Property(x => x.To).IsRequired().HasMaxLength(50);
+                //b.Property(x => x.TargetId).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Remark).HasMaxLength(200);
             });
 
-            builder.Entity<LinkForm>(b =>
+            builder.Entity<LineForm>(b =>
             {
-                b.ToTable("base_flow_link_form");
+                b.ToTable("base_flow_line_form");
                 b.ConfigureByConvention();
 
-                b.Property(x => x.Pid).IsRequired().HasMaxLength(100);
-                b.Property(x => x.Content).HasMaxLength(100);
+                //b.Property(x => x.Pid).IsRequired().HasMaxLength(100);
+                b.Property(x => x.Content).HasMaxLength(1000);
                 b.Property(x => x.Remark).HasMaxLength(200);
             });
         }

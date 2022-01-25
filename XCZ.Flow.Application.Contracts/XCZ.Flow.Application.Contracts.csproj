@@ -5,7 +5,7 @@
     <RootNamespace>XCZ</RootNamespace>
     <AssemblyName>XCZ.FlowManagement.Application.Contracts</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.7</Version>
+    <Version>0.1.8</Version>
     <Authors>XCZ</Authors>
     <Description>流程管理ApplicationContracts</Description>
   </PropertyGroup>

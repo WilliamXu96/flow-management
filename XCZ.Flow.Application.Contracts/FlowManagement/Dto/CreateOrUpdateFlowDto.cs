@@ -36,10 +36,10 @@ namespace XCZ.FlowManagement.Dto
 
         public List<CreateOrUpdateFlowNodeDto> NodeList { get; set; }
 
-        public List<CreateOrUpdateFlowLinkDto> LinkList { get; set; }
+        public List<CreateOrUpdateFlowLineDto> LineList { get; set; }
     }
 
-    public class CreateOrUpdateFlowLinkDto
+    public class CreateOrUpdateFlowLineDto
     {
         /// <summary>
         /// 连线Id
@@ -56,22 +56,20 @@ namespace XCZ.FlowManagement.Dto
         /// <summary>
         /// 连线起点
         /// </summary>
-        public string SourceId { get; set; }
+        public string From { get; set; }
 
         /// <summary>
         /// 连线终点
         /// </summary>
-        public string TargetId { get; set; }
+        public string To { get; set; }
 
         public string Remark { get; set; }
 
-        public List<CreateOrUpdateLinkFormDto> TempFieldForm { get; set; }
+        public List<CreateOrUpdateLineFormDto> FormField { get; set; }
     }
 
-    public class CreateOrUpdateLinkFormDto
+    public class CreateOrUpdateLineFormDto
     {
-        public string LinkId { get; set; }
-
         /// <summary>
         /// 表单
         /// </summary>
@@ -94,17 +92,23 @@ namespace XCZ.FlowManagement.Dto
         /// </summary>
         public string Id { get; set; }
 
-        public string NodeName { get; set; }
+        public string Name { get; set; }
 
         public string Type { get; set; }
 
-        public int Height { get; set; }
+        public string Left { get; set; }
 
-        public int X { get; set; }
+        public string Top { get; set; }
 
-        public int Width { get; set; }
+        public string Ico { get; set; }
 
-        public int Y { get; set; }
+        public string State { get; set; }
+
+        public string Executor { get; set; }
+
+        public string Users { get; set; }
+
+        public string Roles { get; set; }
 
         public string Remark { get; set; }
     }

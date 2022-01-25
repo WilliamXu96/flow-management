@@ -8,17 +8,23 @@
         public string Id { get; set; }
 
 
+        public string Name { get; set; }
+
         public string Type { get; set; }
 
-        public string NodeName { get; set; }
+        public string Left { get; set; }
 
-        public int Height { get; set; }
+        public string Top { get; set; }
 
-        public int X { get; set; }
+        public string Ico { get; set; }
 
-        public int Width { get; set; }
+        public string State { get; set; }
 
-        public int Y { get; set; }
+        public string Executor { get; set; }
+
+        public string Users { get; set; }
+
+        public string Roles { get; set; }
 
         public string Remark { get; set; }
     }

@@ -10,11 +10,11 @@ namespace XCZ.EntityFrameworkCore
     {
         public DbSet<BaseFlow> BaseFlows { get; set; }
 
-        public DbSet<FlowLink> FlowLinks { get; set; }
+        public DbSet<FlowLine> FlowLines { get; set; }
 
         public DbSet<FlowNode> FlowNodes { get; set; }
 
-        public DbSet<LinkForm> LinkForms { get; set; }
+        public DbSet<LineForm> LinkForms { get; set; }
 
         public FlowDbContext(DbContextOptions<FlowDbContext> options) : base(options)
         {

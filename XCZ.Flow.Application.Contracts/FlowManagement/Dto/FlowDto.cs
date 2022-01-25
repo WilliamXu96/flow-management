@@ -9,7 +9,7 @@ namespace XCZ.FlowManagement.Dto
         /// <summary>
         /// 流程Id
         /// </summary>
-        public string FlowId { get; set; }
+        //public string FlowId { get; set; }
 
         public Guid FormId { get; set; }
 
@@ -37,6 +37,6 @@ namespace XCZ.FlowManagement.Dto
 
         public List<FlowNodeDto> NodeList { get; set; }
 
-        public List<FlowLinkDto> LinkList { get; set; } 
+        public List<FlowLinkDto> LineList { get; set; } 
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using Volo.Abp;
-using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
@@ -16,7 +15,7 @@ namespace XCZ.FlowManagement
         /// <summary>
         /// 流程Id
         /// </summary>
-        public string FlowId { get; set; }
+        //public string FlowId { get; set; }
 
         public Guid FormId { get; set; }
 

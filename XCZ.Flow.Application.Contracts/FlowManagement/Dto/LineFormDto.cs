@@ -2,9 +2,9 @@
 
 namespace XCZ.FlowManagement.Dto
 {
-    public class LinkFormDto
+    public class LineFormDto
     {
-        public string Pid { get; set; }
+        //public Guid FlowLinkId { get; set; }
 
         /// <summary>
         /// 表单
