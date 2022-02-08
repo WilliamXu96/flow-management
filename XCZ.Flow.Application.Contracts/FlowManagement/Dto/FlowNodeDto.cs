@@ -1,4 +1,6 @@
-﻿namespace XCZ.FlowManagement.Dto
+﻿using System.Collections.Generic;
+
+namespace XCZ.FlowManagement.Dto
 {
     public class FlowNodeDto
     {
@@ -22,9 +24,9 @@
 
         public string Executor { get; set; }
 
-        public string Users { get; set; }
+        public List<string> Users { get; set; }
 
-        public string Roles { get; set; }
+        public List<string> Roles { get; set; }
 
         public string Remark { get; set; }
     }

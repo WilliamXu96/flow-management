@@ -48,7 +48,7 @@ namespace XCZ.FlowManagement
             });
 
             await InsertNodes(baseFlowId, input.NodeList);
-            await InsertLinks(baseFlowId, input.LineList);
+            await InsertLines(baseFlowId, input.LineList);
 
             return ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
         }
@@ -76,7 +76,7 @@ namespace XCZ.FlowManagement
             dto.LineList = ObjectMapper.Map<List<FlowLine>, List<FlowLinkDto>>(flowLinks);
             foreach (var link in dto.LineList)
             {
-                link.FormField = ObjectMapper.Map<List<LineForm>, List<LineFormDto>>(linkForms.Where(_ => _.FlowLinkId == link.Id).ToList());
+                link.FormField = ObjectMapper.Map<List<LineForm>, List<LineFormDto>>(linkForms.Where(_ => _.FlowLineId == link.Id).ToList());
             }
 
             return dto;
@@ -108,7 +108,7 @@ namespace XCZ.FlowManagement
             await _linkRep.DeleteAsync(_ => _.BaseFlowId == id);
             await _linkFormRep.DeleteAsync(_ => _.BaseFlowId == id);
             await InsertNodes(id, input.NodeList);
-            await InsertLinks(id, input.LineList);
+            await InsertLines(id, input.LineList);
             return ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
         }
 
@@ -127,20 +127,20 @@ namespace XCZ.FlowManagement
                     Top = node.Top,
                     Ico = node.Ico,
                     State = node.State,
-                    Executor = node.Executor,
-                    Users = node.Users,
-                    Roles = node.Roles,
+                    Executor = node.Executor.IsNullOrWhiteSpace() ? null : node.Executor,
+                    Users = node.Users.IsNullOrEmpty() ? null : string.Join(",", node.Users),
+                    Roles = node.Roles.IsNullOrEmpty() ? null : string.Join(",", node.Roles),
                     Remark = node.Remark
                 });
             }
         }
 
-        private async Task InsertLinks(Guid baseFlowId, List<CreateOrUpdateFlowLineDto> links)
+        private async Task InsertLines(Guid baseFlowId, List<CreateOrUpdateFlowLineDto> links)
         {
             foreach (var link in links)
             {
-                var flowLinkId = GuidGenerator.Create();
-                await _linkRep.InsertAsync(new FlowLine(flowLinkId)
+                var flowLineId = GuidGenerator.Create();
+                await _linkRep.InsertAsync(new FlowLine(flowLineId)
                 {
                     TenantId = CurrentTenant.Id,
                     BaseFlowId = baseFlowId,
@@ -159,7 +159,7 @@ namespace XCZ.FlowManagement
                     {
                         TenantId = CurrentTenant.Id,
                         BaseFlowId = baseFlowId,
-                        FlowLinkId = flowLinkId,
+                        FlowLineId = flowLineId,
                         //Pid = link.Id,
                         FieldId = form.FieldId,
                         Condition = form.Condition,

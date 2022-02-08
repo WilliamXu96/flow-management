@@ -40,8 +40,8 @@ namespace XCZ.EntityFrameworkCore
                 b.Property(x => x.Ico).HasMaxLength(50);
                 b.Property(x => x.State).HasMaxLength(50);
                 b.Property(x => x.Executor).HasMaxLength(50);
-                b.Property(x => x.Users).HasMaxLength(50);
-                b.Property(x => x.Roles).HasMaxLength(50);
+                b.Property(x => x.Users).HasMaxLength(1000);
+                b.Property(x => x.Roles).HasMaxLength(1000);
                 b.Property(x => x.Remark).HasMaxLength(200);
             });
 

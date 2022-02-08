@@ -11,7 +11,7 @@ namespace XCZ.FlowManagement
 
         public Guid BaseFlowId { get; set; }
 
-        public Guid FlowLinkId { get; set; }
+        public Guid FlowLineId { get; set; }
 
         /// <summary>
         /// 表单

@@ -106,9 +106,9 @@ namespace XCZ.FlowManagement.Dto
 
         public string Executor { get; set; }
 
-        public string Users { get; set; }
+        public List<string> Users { get; set; }
 
-        public string Roles { get; set; }
+        public List<string> Roles { get; set; }
 
         public string Remark { get; set; }
     }
