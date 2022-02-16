@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.Uow;
 using XCZ.FlowManagement.Dto;
+using XCZ.FormManagement;
 
 namespace XCZ.FlowManagement
 {
@@ -19,17 +18,20 @@ namespace XCZ.FlowManagement
         private readonly IRepository<FlowNode, Guid> _nodeRep;
         private readonly IRepository<FlowLine, Guid> _linkRep;
         private readonly IRepository<LineForm, Guid> _linkFormRep;
+        private readonly IRepository<Form, Guid> _formRep;
 
         public FlowAppService(
             IRepository<BaseFlow, Guid> baseRep,
             IRepository<FlowNode, Guid> nodeRep,
             IRepository<FlowLine, Guid> linkRep,
-            IRepository<LineForm, Guid> linkFormRep)
+            IRepository<LineForm, Guid> linkFormRep,
+            IRepository<Form, Guid> formRep)
         {
             _baseRep = baseRep;
             _nodeRep = nodeRep;
             _linkRep = linkRep;
             _linkFormRep = linkFormRep;
+            _formRep = formRep;
         }
 
         public async Task<FlowDto> Create(CreateOrUpdateFlowDto input)
@@ -92,8 +94,14 @@ namespace XCZ.FlowManagement
                                    .Take(input.MaxResultCount)
                                    .ToListAsync();
 
-            var dto = ObjectMapper.Map<List<BaseFlow>, List<FlowDto>>(items);
-            return new PagedResultDto<FlowDto>(totalCount, dto);
+            var forms = await (await _formRep.GetQueryableAsync()).Where(_ => items.Select(i => i.FormId).Contains(_.Id)).ToListAsync();
+
+            var dtos = ObjectMapper.Map<List<BaseFlow>, List<FlowDto>>(items);
+            foreach (var dto in dtos)
+            {
+                dto.FormName = forms.FirstOrDefault(_ => _.Id == dto.FormId)?.FormName;
+            }
+            return new PagedResultDto<FlowDto>(totalCount, dtos);
         }
 
         public async Task<FlowDto> Update(Guid id, CreateOrUpdateFlowDto input)

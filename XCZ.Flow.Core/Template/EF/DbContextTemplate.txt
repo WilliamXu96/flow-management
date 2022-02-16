@@ -1,3 +1,0 @@
-﻿public DbSet<{EntityName}> {EntityName} { get; set; }
-
-        //Code generation...

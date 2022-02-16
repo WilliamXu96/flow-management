@@ -2,6 +2,7 @@
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using XCZ.FlowManagement;
+using XCZ.WrokFlow;
 
 namespace XCZ.EntityFrameworkCore
 {
@@ -15,6 +16,8 @@ namespace XCZ.EntityFrameworkCore
         public DbSet<FlowNode> FlowNodes { get; set; }
 
         public DbSet<LineForm> LinkForms { get; set; }
+
+        public DbSet<FormWorkFlow> FormWorkFlows { get; set; }
 
         public FlowDbContext(DbContextOptions<FlowDbContext> options) : base(options)
         {

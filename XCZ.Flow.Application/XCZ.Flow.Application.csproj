@@ -5,9 +5,9 @@
     <RootNamespace>XCZ</RootNamespace>
     <AssemblyName>XCZ.FlowManagement.Application</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>XCZ</Authors>
-    <Description>实现流程管理模块新增、修改</Description>
+    <Description>实现工作流新增、启用</Description>
     <Company>XCZ</Company>
   </PropertyGroup>
 

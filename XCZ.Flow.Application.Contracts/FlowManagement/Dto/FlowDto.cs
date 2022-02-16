@@ -13,6 +13,8 @@ namespace XCZ.FlowManagement.Dto
 
         public Guid FormId { get; set; }
 
+        public string FormName { get; set; }
+
         /// <summary>
         /// 标题
         /// </summary>

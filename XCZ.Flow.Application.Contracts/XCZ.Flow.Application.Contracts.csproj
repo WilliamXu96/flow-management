@@ -5,7 +5,7 @@
     <RootNamespace>XCZ</RootNamespace>
     <AssemblyName>XCZ.FlowManagement.Application.Contracts</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>XCZ</Authors>
     <Description>实现流程管理模块新增、修改</Description>
   </PropertyGroup>
@@ -26,6 +26,14 @@
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="5.0.0" />
     <PackageReference Include="Volo.Abp.Localization" Version="5.0.0" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="WrokFlowManagement\Dto\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XCZ.Flow.Core\XCZ.Flow.Core.csproj" />
   </ItemGroup>
 
 </Project>

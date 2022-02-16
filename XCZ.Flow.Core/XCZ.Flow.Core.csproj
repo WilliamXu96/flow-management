@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>XCZ</RootNamespace>
+    <AssemblyName>XCZ.FlowManagement.Core</AssemblyName>
+    <Authors>XCZ</Authors>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.1.0</Version>
+	<Authors>XCZ</Authors>
+	<Description>流程管理Core</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="CacheItems\" />
+  </ItemGroup>
+
+</Project>

@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
+using XCZ.Enums;
 using XCZ.FlowManagement;
+using XCZ.WrokFlow;
 
 namespace XCZ.EntityFrameworkCore
 {
@@ -66,6 +68,15 @@ namespace XCZ.EntityFrameworkCore
                 //b.Property(x => x.Pid).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Content).HasMaxLength(1000);
                 b.Property(x => x.Remark).HasMaxLength(200);
+            });
+
+            builder.Entity<FormWorkFlow>(b =>
+            {
+                b.ToTable("base_form_workflow");
+                b.ConfigureByConvention();
+
+                b.Property(x => x.Status).HasDefaultValue(WorkFlowStatus.Create);
+                b.HasIndex(x => x.EntityId);
             });
         }
     }
