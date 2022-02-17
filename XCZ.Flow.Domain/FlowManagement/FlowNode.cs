@@ -5,18 +5,12 @@ using Volo.Abp.MultiTenancy;
 
 namespace XCZ.FlowManagement
 {
-    /// <summary>
-    /// 流程节点
-    /// </summary>
     public class FlowNode : AggregateRoot<Guid>, IMultiTenant, ISoftDelete
     {
         public Guid? TenantId { get; set; }
 
         public Guid BaseFlowId { get; set; }
 
-        /// <summary>
-        /// 节点Id
-        /// </summary>
         public string NodeId { get; set; }
 
         public string Name { get; set; }

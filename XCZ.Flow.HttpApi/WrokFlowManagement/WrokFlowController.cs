@@ -27,5 +27,12 @@ namespace XCZ.WrokFlowManagement
         {
             return _wrokFlowAppService.GetWorkFlowStatus(ids);
         }
+
+        [HttpPut]
+        [Route("do/{entityId}")]
+        public Task DoWorkFlow(Guid entityId)
+        {
+            return _wrokFlowAppService.DoWorkFlow(entityId);
+        }
     }
 }

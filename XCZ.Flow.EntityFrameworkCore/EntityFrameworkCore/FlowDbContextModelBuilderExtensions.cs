@@ -19,7 +19,6 @@ namespace XCZ.EntityFrameworkCore
                 b.ToTable("base_flow");
                 b.ConfigureByConvention();
 
-                //b.Property(x => x.FlowId).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Title).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Code).IsRequired().HasMaxLength(50);
                 b.Property(x => x.UseDate).IsRequired().HasMaxLength(50);
@@ -52,11 +51,9 @@ namespace XCZ.EntityFrameworkCore
                 b.ToTable("base_flow_line");
                 b.ConfigureByConvention();
 
-                //b.Property(x => x.LineId).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Label).HasMaxLength(100);
                 b.Property(x => x.From).IsRequired().HasMaxLength(50);
                 b.Property(x => x.To).IsRequired().HasMaxLength(50);
-                //b.Property(x => x.TargetId).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Remark).HasMaxLength(200);
             });
 
@@ -65,7 +62,6 @@ namespace XCZ.EntityFrameworkCore
                 b.ToTable("base_flow_line_form");
                 b.ConfigureByConvention();
 
-                //b.Property(x => x.Pid).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Content).HasMaxLength(1000);
                 b.Property(x => x.Remark).HasMaxLength(200);
             });

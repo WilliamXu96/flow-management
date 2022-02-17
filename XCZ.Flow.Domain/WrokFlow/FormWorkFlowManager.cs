@@ -52,13 +52,13 @@ namespace XCZ.WrokFlow
 
                 var executeNode = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == flow.Id && _.NodeId == nextLine.To);
                 var wf = new FormWorkFlow(GuidGenerator.Create())
-                                {
-                                    FormId = form.Id,
-                                    BaseFlowId = flow.Id,
-                                    EntityId = entityId,
-                                    Status = WorkFlowStatus.Create,
-                                    NodeId = executeNode.Id,
-                                };
+                {
+                    FormId = form.Id,
+                    BaseFlowId = flow.Id,
+                    EntityId = entityId,
+                    Status = WorkFlowStatus.Create,
+                    NodeId = executeNode.Id,
+                };
                 return wf;
             }
             catch
@@ -67,10 +67,10 @@ namespace XCZ.WrokFlow
             }
         }
 
-        public async Task<FormWorkFlow> DoWorkFlowAsync(Guid entityId,string user,string[] roles)
+        public async Task<FormWorkFlow> DoWorkFlowAsync(Guid entityId, string user, string[] roles)
         {
             var wf = await _formWorkFlowRepository.GetAsync(_ => _.EntityId == entityId);
-            if (wf.Status == WorkFlowStatus.Checked) throw new BusinessException("流程已完成");
+            if (wf.Status == WorkFlowStatus.Checked) throw new BusinessException("审核失败：流程已完成");
             var nodes = await (await _nodeRepository.GetQueryableAsync()).Where(_ => _.BaseFlowId == wf.BaseFlowId).ToListAsync();
             var lines = await (await _linkRepository.GetQueryableAsync()).Where(_ => _.BaseFlowId == wf.BaseFlowId).ToListAsync();
             var executeNode = nodes.FirstOrDefault(_ => _.Id == wf.NodeId);
