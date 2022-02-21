@@ -11,14 +11,18 @@ namespace XCZ.WrokFlow
         public Guid? TenantId { get; set; }
 
         public bool IsDeleted { get; set; }
+
         public Guid FormId { get; set; }
 
         public Guid BaseFlowId { get; set; }
 
         public Guid EntityId { get; set; }
+
         public WorkFlowStatus Status { get; set; }
 
-        public Guid? NodeId { get; set; }
+        public string NodeId { get; set; }
+
+        //审核人、审核日期
 
         public FormWorkFlow(Guid id) : base(id)
         {

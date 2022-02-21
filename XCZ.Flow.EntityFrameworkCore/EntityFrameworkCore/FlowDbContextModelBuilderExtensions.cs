@@ -71,8 +71,11 @@ namespace XCZ.EntityFrameworkCore
                 b.ToTable("base_form_workflow");
                 b.ConfigureByConvention();
 
+                b.Property(x => x.NodeId).IsRequired().HasMaxLength(50);
                 b.Property(x => x.Status).HasDefaultValue(WorkFlowStatus.Create);
+
                 b.HasIndex(x => x.EntityId);
+                b.HasIndex(x => x.NodeId);
             });
         }
     }

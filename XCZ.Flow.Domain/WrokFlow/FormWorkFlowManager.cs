@@ -57,7 +57,7 @@ namespace XCZ.WrokFlow
                     BaseFlowId = flow.Id,
                     EntityId = entityId,
                     Status = WorkFlowStatus.Create,
-                    NodeId = executeNode.Id,
+                    NodeId = executeNode.NodeId,
                 };
                 return wf;
             }
@@ -73,20 +73,20 @@ namespace XCZ.WrokFlow
             if (wf.Status == WorkFlowStatus.Checked) throw new BusinessException("审核失败：流程已完成");
             var nodes = await (await _nodeRepository.GetQueryableAsync()).Where(_ => _.BaseFlowId == wf.BaseFlowId).ToListAsync();
             var lines = await (await _linkRepository.GetQueryableAsync()).Where(_ => _.BaseFlowId == wf.BaseFlowId).ToListAsync();
-            var executeNode = nodes.FirstOrDefault(_ => _.Id == wf.NodeId);
+            var executeNode = nodes.FirstOrDefault(_ => _.NodeId == wf.NodeId);
             if (executeNode == null) throw new BusinessException("节点错误");
-            if (executeNode.Executor == "users" && executeNode.Users.IsNullOrWhiteSpace())
+            if (executeNode.Executor == "users" && !executeNode.Users.IsNullOrWhiteSpace())
             {
-                if (executeNode.Users.Split(',').ToList().FirstOrDefault(user) == null)
+                if (!executeNode.Users.Split(',').ToList().Any(u => u == user))
                 {
-                    throw new BusinessException("没有执行权限");
+                    throw new BusinessException("审核失败：没有执行权限");
                 }
             }
-            if (executeNode.Executor == "roles" && executeNode.Roles.IsNullOrWhiteSpace())
+            if (executeNode.Executor == "roles" && !executeNode.Roles.IsNullOrWhiteSpace())
             {
                 if (!executeNode.Roles.Split(',').ToList().Any(i => roles.Contains(i)))
                 {
-                    throw new BusinessException("没有执行权限");
+                    throw new BusinessException("审核失败：没有执行权限");
                 }
             }
             var nextLine = lines.FirstOrDefault(_ => _.From == executeNode.NodeId);
@@ -97,7 +97,7 @@ namespace XCZ.WrokFlow
             //TODO：连线条件判断
 
             if (nextNode.Type == "end") wf.Status = WorkFlowStatus.Checked;
-            wf.NodeId = nextNode.Id;
+            wf.NodeId = nextNode.NodeId;
             return wf;
         }
     }
