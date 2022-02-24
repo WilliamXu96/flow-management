@@ -12,6 +12,8 @@ namespace XCZ.WrokFlowManagement
     {
         Task CreateWorkFlow(string formName, Guid entityId);
 
+        Task CreateWorkFlow(string formName, object obj);
+
         Task DoWorkFlow(Guid entityId);
 
         Task<ListResultDto<FormWorkFlowStatusDto>> GetWorkFlowStatus(List<Guid> ids);

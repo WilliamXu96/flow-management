@@ -31,6 +31,12 @@ namespace XCZ.WrokFlowManagement
             await _formWorkFlowRepository.InsertAsync(workflow);
         }
 
+        public async Task CreateWorkFlow(string formName, object obj)
+        {
+            var workflow = await _formWorkFlowManager.CreateAsync(formName, obj);
+            await _formWorkFlowRepository.InsertAsync(workflow);
+        }
+
         public async Task DoWorkFlow(Guid entityId)
         {
             var workflow = await _formWorkFlowManager.DoWorkFlowAsync(entityId, CurrentUser.UserName, CurrentUser.Roles);

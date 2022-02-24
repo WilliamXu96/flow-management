@@ -62,6 +62,7 @@ namespace XCZ.EntityFrameworkCore
                 b.ToTable("base_flow_line_form");
                 b.ConfigureByConvention();
 
+                b.Property(x => x.Condition).HasMaxLength(100);
                 b.Property(x => x.Content).HasMaxLength(1000);
                 b.Property(x => x.Remark).HasMaxLength(200);
             });

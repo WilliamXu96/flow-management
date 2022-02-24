@@ -5,7 +5,7 @@
     <RootNamespace>XCZ</RootNamespace>
     <AssemblyName>XCZ.FlowManagement.Application</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <Authors>XCZ</Authors>
     <Description>实现工作流-审批流执行权限验证</Description>
     <Company>XCZ</Company>
