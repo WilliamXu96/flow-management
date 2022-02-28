@@ -14,7 +14,7 @@ namespace XCZ.FlowManagement.Dto
         /// <summary>
         /// 字典值
         /// </summary>
-        public Guid Condition { get; set; }
+        public string Condition { get; set; }
 
         public string Content { get; set; }
 
