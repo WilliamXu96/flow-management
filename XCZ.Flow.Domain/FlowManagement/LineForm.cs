@@ -15,7 +15,13 @@ namespace XCZ.FlowManagement
 
         public Guid FieldId { get; set; }
 
+        public string FieldName { get; set; }
+
+        public string FieldType { get; set; }
+
         public string Condition { get; set; }
+
+        public int IntContent { get; set; }
 
         public string Content { get; set; }
 

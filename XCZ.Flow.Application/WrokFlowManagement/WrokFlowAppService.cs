@@ -54,7 +54,5 @@ namespace XCZ.WrokFlowManagement
                                                                       .ToListAsync();
             return new ListResultDto<FormWorkFlowStatusDto>(result);
         }
-
-        
     }
 }

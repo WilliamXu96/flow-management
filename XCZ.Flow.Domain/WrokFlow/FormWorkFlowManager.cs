@@ -44,11 +44,11 @@ namespace XCZ.WrokFlow
             {
                 var form = await _formRepository.FirstOrDefaultAsync(_ => _.FormName == formName);
                 var flow = await _baseflowRepository.FirstOrDefaultAsync(_ => _.FormId == form.Id);
-                var snode = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == flow.Id && _.Type == "start");
-                var nline = await _linkRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == flow.Id && _.From == snode.NodeId);
-                //TODO：连线条件判断
+                var sn = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == flow.Id && _.Type == "start");
+                var nl = await _linkRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == flow.Id && _.From == sn.NodeId);
+                var nls = await _linkRepository.GetListAsync(_ => _.BaseFlowId == flow.Id && _.From == sn.NodeId);
 
-                var exe = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == flow.Id && _.NodeId == nline.To);
+                var exe = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == flow.Id && _.NodeId == nl.To);
                 var wf = new FormWorkFlow(GuidGenerator.Create()) { FormId = form.Id, BaseFlowId = flow.Id, EntityId = entityId, Status = WorkFlowStatus.Create, NodeId = exe.NodeId };
                 return wf;
             }
@@ -64,12 +64,24 @@ namespace XCZ.WrokFlow
             {
                 var id1 = await (await _formRepository.GetQueryableAsync()).Where(_ => _.FormName == formName).Select(s => s.Id).FirstOrDefaultAsync();
                 var id2 = await (await _baseflowRepository.GetQueryableAsync()).Where(_ => _.FormId == id1).Select(s => s.Id).FirstOrDefaultAsync();
+                var sn = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == id2 && _.Type == "start");
+                var nls = await _linkRepository.GetListAsync(_ => _.BaseFlowId == id2 && _.From == sn.NodeId);
+                var lfs = await _lineFormRepository.GetListAsync(_ => _.BaseFlowId == id2 && nls.Select(s => s.Id).Contains(_.FlowLineId));
+                var nid = string.Empty;
+                var lin = nls.First();
+                var f = lfs.First(_ => _.FlowLineId == lin.Id);
+                if (f.FieldType == "int")
+                {
+                    var intValus = lfs.Where(_ => _.FieldName == f.FieldName && _.FieldType == "int").OrderBy(o => o.IntContent).ToList();
+                    var prop = Convert.ToInt32(obj.GetType().GetProperty(f.FieldName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance).GetValue(obj).ToString());
+                    foreach (var val in intValus)
+                    {
+                        if (prop > val.IntContent)
+                            nid = lin.To;
+                    }
+                }
 
-                var snode = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == id2 && _.Type == "start");
-                var nline = await _linkRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == id2 && _.From == snode.NodeId);
-                //TODO：连线条件判断
-
-                var exe = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == id2 && _.NodeId == nline.To);
+                var exe = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == id2 && _.NodeId == nid);
                 var wf = new FormWorkFlow(GuidGenerator.Create()) { FormId = id1, BaseFlowId = id2, EntityId = Guid.Parse(obj.GetType().GetProperty("id", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance).GetValue(obj).ToString()), Status = WorkFlowStatus.Create, NodeId = exe.NodeId };
                 return wf;
             }

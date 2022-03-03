@@ -5,8 +5,6 @@ namespace XCZ.FlowManagement.Dto
 {
     public class CreateOrUpdateFlowDto
     {
-        public string FlowId { get; set; }
-
         public Guid FormId { get; set; }
 
         public string Title { get; set; }
@@ -26,8 +24,6 @@ namespace XCZ.FlowManagement.Dto
 
     public class CreateOrUpdateFlowLineDto
     {
-        public string Id { get; set; }
-
         public string Label { get; set; }
 
         public string Type { get; set; }
