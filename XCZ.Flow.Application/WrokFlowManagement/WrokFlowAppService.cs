@@ -8,6 +8,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using XCZ.Dtos;
 using XCZ.WrokFlow;
+using XCZ.WrokFlowManagement.Dto;
 
 namespace XCZ.WrokFlowManagement
 {
@@ -24,22 +25,15 @@ namespace XCZ.WrokFlowManagement
             _formWorkFlowManager = formWorkFlowManager;
             _formWorkFlowRepository = formWorkFlowRepository;
         }
-
-        public async Task CreateWorkFlow(string formName, Guid entityId)
-        {
-            var workflow = await _formWorkFlowManager.CreateAsync(formName, entityId);
-            await _formWorkFlowRepository.InsertAsync(workflow);
-        }
-
         public async Task CreateWorkFlow(string formName, object obj)
         {
             var workflow = await _formWorkFlowManager.CreateAsync(formName, obj);
             await _formWorkFlowRepository.InsertAsync(workflow);
         }
 
-        public async Task DoWorkFlow(Guid entityId)
+        public async Task DoWorkFlow(Guid entityId, DoWorkFlowInputDto input)
         {
-            var workflow = await _formWorkFlowManager.DoWorkFlowAsync(entityId, CurrentUser.UserName, CurrentUser.Roles);
+            var workflow = await _formWorkFlowManager.DoWorkFlowAsync(entityId,input.Data, CurrentUser.UserName, CurrentUser.Roles);
             await _formWorkFlowRepository.UpdateAsync(workflow);
         }
 

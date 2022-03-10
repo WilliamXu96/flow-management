@@ -6,6 +6,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc;
 using XCZ.Dtos;
+using XCZ.WrokFlowManagement.Dto;
 
 namespace XCZ.WrokFlowManagement
 {
@@ -30,9 +31,9 @@ namespace XCZ.WrokFlowManagement
 
         [HttpPut]
         [Route("do/{entityId}")]
-        public Task DoWorkFlow(Guid entityId)
+        public Task DoWorkFlow(Guid entityId, DoWorkFlowInputDto input)
         {
-            return _wrokFlowAppService.DoWorkFlow(entityId);
+            return _wrokFlowAppService.DoWorkFlow(entityId, input);
         }
     }
 }
