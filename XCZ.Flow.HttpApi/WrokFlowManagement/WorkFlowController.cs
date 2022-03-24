@@ -6,34 +6,34 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc;
 using XCZ.Dtos;
-using XCZ.WrokFlowManagement.Dto;
+using XCZ.WorkFlowManagement.Dto;
 
-namespace XCZ.WrokFlowManagement
+namespace XCZ.WorkFlowManagement
 {
     [RemoteService]
     [Area("business")]
     [Route("api/business/workflow")]
-    public class WrokFlowController : AbpController
+    public class WorkFlowController : AbpController
     {
-        private readonly IWrokFlowAppService _wrokFlowAppService;
+        private readonly IWorkFlowAppService _workFlowAppService;
 
-        public WrokFlowController(IWrokFlowAppService wrokFlowAppService)
+        public WorkFlowController(IWorkFlowAppService workFlowAppService)
         {
-            _wrokFlowAppService = wrokFlowAppService;
+            _workFlowAppService = workFlowAppService;
         }
 
         [HttpPost]
         [Route("status")]
         public Task<ListResultDto<FormWorkFlowStatusDto>> GetWorkFlowStatus(List<Guid> ids)
         {
-            return _wrokFlowAppService.GetWorkFlowStatus(ids);
+            return _workFlowAppService.GetWorkFlowStatus(ids);
         }
 
         [HttpPut]
         [Route("do/{entityId}")]
         public Task DoWorkFlow(Guid entityId, DoWorkFlowInputDto input)
         {
-            return _wrokFlowAppService.DoWorkFlow(entityId, input);
+            return _workFlowAppService.DoWorkFlow(entityId, input);
         }
     }
 }

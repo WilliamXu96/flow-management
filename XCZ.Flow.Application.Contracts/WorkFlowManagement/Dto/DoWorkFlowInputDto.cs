@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace XCZ.WrokFlowManagement.Dto
+namespace XCZ.WorkFlowManagement.Dto
 {
     public class DoWorkFlowInputDto
     {

@@ -12,7 +12,7 @@ using XCZ.Enums;
 using XCZ.FlowManagement;
 using XCZ.FormManagement;
 
-namespace XCZ.WrokFlow
+namespace XCZ.WorkFlow
 {
     public class FormWorkFlowManager : DomainService
     {

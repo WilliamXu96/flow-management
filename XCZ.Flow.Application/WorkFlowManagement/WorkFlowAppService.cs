@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +8,19 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using XCZ.Dtos;
-using XCZ.WrokFlow;
-using XCZ.WrokFlowManagement.Dto;
+using XCZ.Permissions;
+using XCZ.WorkFlow;
+using XCZ.WorkFlowManagement.Dto;
 
-namespace XCZ.WrokFlowManagement
+namespace XCZ.WorkFlowManagement
 {
-    public class WrokFlowAppService : ApplicationService, IWrokFlowAppService
+    [Authorize(FlowPermissions.WorkFlow.Default)]
+    public class WorkFlowAppService : ApplicationService, IWorkFlowAppService
     {
         private readonly FormWorkFlowManager _formWorkFlowManager;
         private readonly IRepository<FormWorkFlow, Guid> _formWorkFlowRepository;
 
-        public WrokFlowAppService(
+        public WorkFlowAppService(
             FormWorkFlowManager formWorkFlowManager,
             IRepository<FormWorkFlow, Guid> formWorkFlowRepository
             )
@@ -25,12 +28,15 @@ namespace XCZ.WrokFlowManagement
             _formWorkFlowManager = formWorkFlowManager;
             _formWorkFlowRepository = formWorkFlowRepository;
         }
+
+        [Authorize(FlowPermissions.WorkFlow.Create)]
         public async Task CreateWorkFlow(string formName, object obj)
         {
             var workflow = await _formWorkFlowManager.CreateAsync(formName, obj);
             await _formWorkFlowRepository.InsertAsync(workflow);
         }
 
+        [Authorize(FlowPermissions.WorkFlow.DoWorkFlow)]
         public async Task DoWorkFlow(Guid entityId, DoWorkFlowInputDto input)
         {
             var workflow = await _formWorkFlowManager.DoWorkFlowAsync(entityId,input.Data, CurrentUser.UserName, CurrentUser.Roles);

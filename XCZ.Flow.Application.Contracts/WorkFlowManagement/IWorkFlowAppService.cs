@@ -4,12 +4,11 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using XCZ.Dtos;
-using XCZ.Enums;
-using XCZ.WrokFlowManagement.Dto;
+using XCZ.WorkFlowManagement.Dto;
 
-namespace XCZ.WrokFlowManagement
+namespace XCZ.WorkFlowManagement
 {
-    public interface IWrokFlowAppService : IApplicationService
+    public interface IWorkFlowAppService : IApplicationService
     {
         Task CreateWorkFlow(string formName, object obj);
 

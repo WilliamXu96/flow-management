@@ -4,7 +4,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 using XCZ.Enums;
 
-namespace XCZ.WrokFlow
+namespace XCZ.WorkFlow
 {
     public class FormWorkFlow : AuditedAggregateRoot<Guid>, ISoftDelete, IMultiTenant
     {

@@ -7,6 +7,9 @@
     "Edit": "修改",
     "Delete": "删除",
     "Create": "新增",
-    "Form": "业务系统"
+    "FlowManagement": "流程管理",
+    "Flow": "流程",
+    "WorkFlow": "工作流",
+    "DoWorkFlow": "执行"
   }
 }

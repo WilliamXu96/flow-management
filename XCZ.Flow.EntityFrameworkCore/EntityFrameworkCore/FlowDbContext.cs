@@ -2,7 +2,7 @@
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using XCZ.FlowManagement;
-using XCZ.WrokFlow;
+using XCZ.WorkFlow;
 
 namespace XCZ.EntityFrameworkCore
 {

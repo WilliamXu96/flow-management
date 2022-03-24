@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,11 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using XCZ.FlowManagement.Dto;
 using XCZ.FormManagement;
+using XCZ.Permissions;
 
 namespace XCZ.FlowManagement
 {
+    [Authorize(FlowPermissions.Flow.Default)]
     public class FlowAppService : ApplicationService, IFlowAppService
     {
         private readonly IRepository<BaseFlow, Guid> _baseRep;
@@ -38,6 +41,7 @@ namespace XCZ.FlowManagement
             _formFieldRep = formFieldRep;
         }
 
+        [Authorize(FlowPermissions.Flow.Create)]
         public async Task<FlowDto> Create(CreateOrUpdateFlowDto input)
         {
             if (await _baseRep.AnyAsync(_ => _.FormId == input.FormId))
@@ -60,6 +64,7 @@ namespace XCZ.FlowManagement
             return ObjectMapper.Map<BaseFlow, FlowDto>(baseFlow);
         }
 
+        [Authorize(FlowPermissions.Flow.Delete)]
         public async Task Delete(List<Guid> ids)
         {
             foreach (var id in ids)
@@ -107,6 +112,7 @@ namespace XCZ.FlowManagement
             return new PagedResultDto<FlowDto>(totalCount, dtos);
         }
 
+        [Authorize(FlowPermissions.Flow.Update)]
         public async Task<FlowDto> Update(Guid id, CreateOrUpdateFlowDto input)
         {
             var baseFlow = await _baseRep.GetAsync(id);
