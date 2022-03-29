@@ -5,9 +5,9 @@
     <RootNamespace>XCZ</RootNamespace>
     <AssemblyName>XCZ.FlowManagement.EntityFrameworkCore</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.6</Version>
+    <Version>1.1.7</Version>
     <Authors>XCZ</Authors>
-    <Description>流程管理EntityFrameworkCore</Description>
+    <Description>添加表单、流程示例数据</Description>
     <Company>XCZ</Company>
   </PropertyGroup>
 

@@ -5,7 +5,7 @@
     <RootNamespace>XCZ</RootNamespace>
     <AssemblyName>XCZ.FlowManagement.Application.Contracts</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.6</Version>
+    <Version>1.1.7</Version>
     <Authors>XCZ</Authors>
     <Description>实现单字段审批流处理</Description>
   </PropertyGroup>
