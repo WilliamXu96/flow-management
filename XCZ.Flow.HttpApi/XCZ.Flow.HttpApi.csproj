@@ -5,13 +5,13 @@
     <RootNamespace>XCZ</RootNamespace>
     <AssemblyName>XCZ.FlowManagement.HttpApi</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.7</Version>
+    <Version>1.1.8</Version>
     <Authors>XCZ</Authors>
     <Description>流程管理HttpApi</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="5.1.4" />
   </ItemGroup>
 
   <ItemGroup>

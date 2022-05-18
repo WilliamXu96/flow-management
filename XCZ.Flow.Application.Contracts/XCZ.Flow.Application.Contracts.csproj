@@ -5,7 +5,7 @@
     <RootNamespace>XCZ</RootNamespace>
     <AssemblyName>XCZ.FlowManagement.Application.Contracts</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.7</Version>
+    <Version>1.1.8</Version>
     <Authors>XCZ</Authors>
     <Description>实现单字段审批流处理</Description>
   </PropertyGroup>
@@ -23,9 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Application" Version="5.0.0" />
-    <PackageReference Include="Volo.Abp.Localization" Version="5.0.0" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.Localization" Version="5.1.4" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="5.1.4" />
   </ItemGroup>
 
   <ItemGroup>

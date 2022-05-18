@@ -34,7 +34,7 @@ namespace XCZ.DataSeeder
                     Label="书名",
                     Placeholder="请输入书名",
                     IsRequired=true,
-                    Span=11
+                    Span=24
                 },
                 new FormField(Guid.NewGuid())
                 {
@@ -46,7 +46,7 @@ namespace XCZ.DataSeeder
                     Placeholder="请输入价格",
                     DefaultValue="0",
                     IsRequired=true,
-                    Span=13
+                    Span=24
                 }
             };
         }

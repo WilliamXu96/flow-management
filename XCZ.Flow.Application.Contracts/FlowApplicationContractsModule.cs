@@ -12,7 +12,6 @@ namespace XCZ
     [DependsOn(
         typeof(AbpValidationModule),
         typeof(AbpLocalizationModule),
-        typeof(AbpDddApplicationModule),
         typeof(AbpPermissionManagementApplicationContractsModule)
     )]
     public class FlowApplicationContractsModule : AbpModule
