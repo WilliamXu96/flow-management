@@ -18,5 +18,7 @@ namespace XCZ.FlowManagement
         Task<PagedResultDto<FlowDto>> GetAll(GetFlowInputDto input);
 
         Task<FlowDto> Get(Guid id);
+
+        Task<FlowDto> GetByNode(GetFlowByNodeInputDto input);
     }
 }

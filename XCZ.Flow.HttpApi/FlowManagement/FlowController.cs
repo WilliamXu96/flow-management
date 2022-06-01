@@ -42,6 +42,13 @@ namespace XCZ.FlowManagement
         }
 
         [HttpGet]
+        [Route("by-node")]
+        public Task<FlowDto> GetByNode(GetFlowByNodeInputDto input)
+        {
+            return _flowAppService.GetByNode(input);
+        }
+
+        [HttpGet]
         public Task<PagedResultDto<FlowDto>> GetAll(GetFlowInputDto input)
         {
             return _flowAppService.GetAll(input);

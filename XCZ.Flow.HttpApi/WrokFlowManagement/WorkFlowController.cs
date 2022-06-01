@@ -29,6 +29,13 @@ namespace XCZ.WorkFlowManagement
             return _workFlowAppService.GetWorkFlowStatus(ids);
         }
 
+        [HttpPost]
+        [Route("node-status")]
+        public Task<ListResultDto<FormWorkFlowNodeStatusDto>> GetWorkFlowNodeStatus(List<Guid> ids)
+        {
+            return _workFlowAppService.GetWorkFlowNodeStatus(ids);
+        }
+
         [HttpPut]
         [Route("do/{entityId}")]
         public Task DoWorkFlow(Guid entityId, DoWorkFlowInputDto input)

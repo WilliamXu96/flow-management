@@ -15,5 +15,7 @@ namespace XCZ.WorkFlowManagement
         Task DoWorkFlow(Guid entityId, DoWorkFlowInputDto input);
 
         Task<ListResultDto<FormWorkFlowStatusDto>> GetWorkFlowStatus(List<Guid> ids);
+
+        Task<ListResultDto<FormWorkFlowNodeStatusDto>> GetWorkFlowNodeStatus(List<Guid> ids);
     }
 }

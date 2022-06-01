@@ -93,6 +93,13 @@ namespace XCZ.FlowManagement
             return dto;
         }
 
+        public async Task<FlowDto> GetByNode(GetFlowByNodeInputDto input)
+        {
+            var node = await _nodeRep.GetAsync(_ => _.NodeId == input.NodeId);
+            var result = await Get(node.BaseFlowId);
+            return result;
+        }
+
         public async Task<PagedResultDto<FlowDto>> GetAll(GetFlowInputDto input)
         {
             var query = (await _baseRep.GetQueryableAsync()).WhereIf(!input.Filter.IsNullOrWhiteSpace(), _ => _.Code.Contains(input.Filter) || _.Title.Contains(input.Filter));

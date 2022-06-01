@@ -42,6 +42,7 @@ namespace XCZ.WorkFlow
 
         public async Task<FormWorkFlow> CreateAsync(string formName, object obj)
         {
+            //TODO：性能优化
             var id1 = await (await _formRepository.GetQueryableAsync()).Where(_ => _.FormName == formName).Select(s => s.Id).FirstOrDefaultAsync();
             var id2 = await (await _baseflowRepository.GetQueryableAsync()).Where(_ => _.FormId == id1).Select(s => s.Id).FirstOrDefaultAsync();
             var sn = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == id2 && _.Type == "start");
