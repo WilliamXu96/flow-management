@@ -86,18 +86,26 @@ namespace XCZ.WorkFlow
             return wf;
         }
 
+        public async Task CheckFormStatusAsync(Guid entityId)
+        {
+            var wf = await _formWorkFlowRepository.FirstOrDefaultAsync(_ => _.EntityId == entityId);
+            if (wf == null) return;
+            if(wf.Status==WorkFlowStatus.Create) throw new BusinessException("修改失败：流程审核中！");
+            if (wf.Status == WorkFlowStatus.Checked) throw new BusinessException("修改失败：流程已审核！");
+        }
+
         public async Task<FormWorkFlow> DoWorkFlowAsync(Guid entityId, string jsonStr, string user, string[] roles)
         {
             var wf = await _formWorkFlowRepository.GetAsync(_ => _.EntityId == entityId);
-            if (wf.Status == WorkFlowStatus.Checked) throw new BusinessException("审核失败：流程已完成");
+            if (wf.Status == WorkFlowStatus.Checked) throw new BusinessException("审核失败：流程已完成！");
             var ns = await _nodeRepository.GetListAsync(_ => _.BaseFlowId == wf.BaseFlowId);
             if (!ns.Any()) throw new BusinessException("新增失败：找不到流程信息！");
             var exe = ns.FirstOrDefault(_ => _.NodeId == wf.NodeId);
             if (exe == null) throw new BusinessException("节点错误");
             if (exe.Executor == "users" && !exe.Users.IsNullOrWhiteSpace())
-                if (!exe.Users.Split(',').ToList().Any(u => u == user)) throw new BusinessException("审核失败：没有执行权限");
+                if (!exe.Users.Split(',').ToList().Any(u => u == user)) throw new BusinessException("审核失败：没有执行权限！");
             if (exe.Executor == "roles" && !exe.Roles.IsNullOrWhiteSpace())
-                if (!exe.Roles.Split(',').ToList().Any(i => roles.Contains(i))) throw new BusinessException("审核失败：没有执行权限");
+                if (!exe.Roles.Split(',').ToList().Any(i => roles.Contains(i))) throw new BusinessException("审核失败：没有执行权限！");
             var nls = await _lineRepository.GetListAsync(_ => _.BaseFlowId == wf.BaseFlowId && _.From == exe.NodeId);
             var lfs = await _lineFormRepository.GetListAsync(_ => _.BaseFlowId == wf.BaseFlowId && nls.Select(s => s.Id).Contains(_.FlowLineId));
             string nid = null;
