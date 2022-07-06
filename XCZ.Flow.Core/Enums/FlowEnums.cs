@@ -3,9 +3,13 @@
     public enum WorkFlowStatus
     {
         /// <summary>
-        /// 待审核
+        /// 新建
         /// </summary>
         Create,
+        /// <summary>
+        /// 审核中
+        /// </summary>
+        Checking,
         /// <summary>
         /// 已审核
         /// </summary>

@@ -12,7 +12,7 @@ namespace XCZ.WorkFlowManagement
     {
         Task CreateWorkFlow(string formName, object obj);
 
-        Task CheckFormStatus(Guid entityId);
+        Task CheckFormStatus(Guid entityId, object obj);
 
         Task DoWorkFlow(Guid entityId, DoWorkFlowInputDto input);
 

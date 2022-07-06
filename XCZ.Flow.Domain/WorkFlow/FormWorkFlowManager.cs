@@ -49,6 +49,29 @@ namespace XCZ.WorkFlow
             if (sn == null) throw new BusinessException("新增失败：找不到流程信息！");
             var nls = await _lineRepository.GetListAsync(_ => _.BaseFlowId == id2 && _.From == sn.NodeId);
             var lfs = await _lineFormRepository.GetListAsync(_ => _.BaseFlowId == id2 && nls.Select(s => s.Id).Contains(_.FlowLineId));
+            var nid = GetNid(nls, lfs, obj);
+            var exe = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == id2 && _.NodeId == nid);
+            var wf = new FormWorkFlow(GuidGenerator.Create()) { FormId = id1, BaseFlowId = id2, EntityId = Guid.Parse(obj.GetType().GetProperty("id", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance).GetValue(obj).ToString()), Status = WorkFlowStatus.Create, NodeId = exe.NodeId };
+            return wf;
+        }
+
+        public async Task CheckFormStatusAsync(Guid entityId, object obj)
+        {
+            var wf = await _formWorkFlowRepository.FirstOrDefaultAsync(_ => _.EntityId == entityId);
+            if (wf == null) throw new BusinessException("修改失败：找不到流程信息！");
+            if (wf.Status == WorkFlowStatus.Checking) throw new BusinessException("修改失败：流程审核中！");
+            if (wf.Status == WorkFlowStatus.Checked) throw new BusinessException("修改失败：流程已审核！");
+            var sn = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == wf.BaseFlowId && _.Type == "start");
+            if (sn == null) throw new BusinessException("修改失败：找不到开始流程！");
+            var nls = await _lineRepository.GetListAsync(_ => _.BaseFlowId == wf.BaseFlowId && _.From == sn.NodeId);
+            var lfs = await _lineFormRepository.GetListAsync(_ => _.BaseFlowId == wf.BaseFlowId && nls.Select(s => s.Id).Contains(_.FlowLineId));
+            var nid = GetNid(nls, lfs, obj);
+            var exe = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == wf.BaseFlowId && _.NodeId == nid);
+            wf.NodeId = exe.NodeId;
+        }
+
+        private string GetNid(List<FlowLine> nls, List<LineForm> lfs, object obj)
+        {
             string nid = null;
             try
             {
@@ -81,17 +104,7 @@ namespace XCZ.WorkFlow
                 throw new BusinessException("新增失败：工作流启动异常！");
             }
             if (nid.IsNullOrEmpty()) throw new BusinessException("新增失败：找不到符合条件的流程节点！");
-            var exe = await _nodeRepository.FirstOrDefaultAsync(_ => _.BaseFlowId == id2 && _.NodeId == nid);
-            var wf = new FormWorkFlow(GuidGenerator.Create()) { FormId = id1, BaseFlowId = id2, EntityId = Guid.Parse(obj.GetType().GetProperty("id", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance).GetValue(obj).ToString()), Status = WorkFlowStatus.Create, NodeId = exe.NodeId };
-            return wf;
-        }
-
-        public async Task CheckFormStatusAsync(Guid entityId)
-        {
-            var wf = await _formWorkFlowRepository.FirstOrDefaultAsync(_ => _.EntityId == entityId);
-            if (wf == null) return;
-            if(wf.Status==WorkFlowStatus.Create) throw new BusinessException("修改失败：流程审核中！");
-            if (wf.Status == WorkFlowStatus.Checked) throw new BusinessException("修改失败：流程已审核！");
+            return nid;
         }
 
         public async Task<FormWorkFlow> DoWorkFlowAsync(Guid entityId, string jsonStr, string user, string[] roles)
@@ -146,6 +159,7 @@ namespace XCZ.WorkFlow
             var nn = ns.FirstOrDefault(_ => _.NodeId == nid);
             if (nn == null) throw new BusinessException("执行失败：找不到下游流程节点！");
             if (nn.Type == "end") wf.Status = WorkFlowStatus.Checked;
+            else wf.Status = WorkFlowStatus.Checking;
             wf.NodeId = nid;
             return wf;
         }

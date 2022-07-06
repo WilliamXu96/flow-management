@@ -30,7 +30,7 @@ namespace XCZ.DataSeeder
                     FormId=formId,
                     FieldType= "input",
                     DataType="string",
-                    FieldName="Name",
+                    FieldName="name",
                     Label="书名",
                     Placeholder="请输入书名",
                     IsRequired=true,

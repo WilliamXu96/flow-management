@@ -40,9 +40,9 @@ namespace XCZ.WorkFlowManagement
             await _formWorkFlowRepository.InsertAsync(workflow);
         }
 
-        public async Task CheckFormStatus(Guid entityId)
+        public async Task CheckFormStatus(Guid entityId, object obj)
         {
-            await _formWorkFlowManager.CheckFormStatusAsync(entityId);
+            await _formWorkFlowManager.CheckFormStatusAsync(entityId, obj);
         }
 
         [Authorize(FlowPermissions.WorkFlow.DoWorkFlow)]
