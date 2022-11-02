@@ -9,13 +9,12 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using XCZ.Dtos;
 using XCZ.FlowManagement;
-using XCZ.Permissions;
 using XCZ.WorkFlow;
 using XCZ.WorkFlowManagement.Dto;
 
 namespace XCZ.WorkFlowManagement
 {
-    [Authorize(FlowPermissions.WorkFlow.Default)]
+    [Authorize]
     public class WorkFlowAppService : ApplicationService, IWorkFlowAppService
     {
         private readonly FormWorkFlowManager _formWorkFlowManager;
@@ -33,7 +32,7 @@ namespace XCZ.WorkFlowManagement
             _nodeRepository = nodeRepository;
         }
 
-        [Authorize(FlowPermissions.WorkFlow.Create)]
+        [Authorize]
         public async Task CreateWorkFlow(string formName, object obj)
         {
             var workflow = await _formWorkFlowManager.CreateAsync(formName, obj);
@@ -45,7 +44,7 @@ namespace XCZ.WorkFlowManagement
             await _formWorkFlowManager.CheckFormStatusAsync(entityId, obj);
         }
 
-        [Authorize(FlowPermissions.WorkFlow.DoWorkFlow)]
+        [Authorize]
         public async Task DoWorkFlow(Guid entityId, DoWorkFlowInputDto input)
         {
             var workflow = await _formWorkFlowManager.DoWorkFlowAsync(entityId, input.Data, CurrentUser.UserName, CurrentUser.Roles);
