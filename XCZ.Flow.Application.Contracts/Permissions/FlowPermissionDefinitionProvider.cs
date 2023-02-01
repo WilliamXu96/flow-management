@@ -10,7 +10,7 @@ namespace XCZ.Permissions
 
         public override void Define(IPermissionDefinitionContext context)
         {
-            var flowManagement = context.AddGroup(FlowPermissions.FlowManagement, L("FlowManagement"), MultiTenancySides.Tenant);
+            var flowManagement = context.AddGroup(FlowPermissions.FlowManagement, L("FlowManagement"));
 
             var flow = flowManagement.AddPermission(FlowPermissions.Flow.Default, L("Flow"));
             flow.AddChild(FlowPermissions.Flow.Update, L("Edit"));

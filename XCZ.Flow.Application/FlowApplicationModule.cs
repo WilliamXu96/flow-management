@@ -20,13 +20,5 @@ namespace XCZ
                 options.AddMaps<FlowApplicationModule>();
             });
         }
-
-        public override void PreConfigureServices(ServiceConfigurationContext context)
-        {
-            PreConfigure<AbpJsonOptions>(option =>
-            {
-                option.UseHybridSerializer = false;
-            });
-        }
     }
 }

@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>XCZ</RootNamespace>
     <AssemblyName>XCZ.FlowManagement.HttpApi</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.3.0</Version>
+    <Version>2.0.0</Version>
     <Authors>XCZ</Authors>
     <Description>流程管理HttpApi</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="6.0.0" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
